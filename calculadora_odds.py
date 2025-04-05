@@ -1,7 +1,5 @@
 import streamlit as st
 import pandas as pd
-from PIL import Image
-import base64
 
 # Configuração da página com tema personalizável
 st.set_page_config(
@@ -76,20 +74,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# --- FUNÇÃO PARA CARREGAR LOGO ---
-def get_image_base64(path):
-    with open(path, "rb") as img_file:
-        return base64.b64encode(img_file.read()).decode()
-    
-# Logo (substitua pelo caminho da sua imagem ou use URL)
-logo_html = """
-<div style="text-align:center; margin-bottom:30px">
-    <img src="data:image/png;base64,{}" width="180">
-</div>
-""".format(
-    get_image_base64("logo.png")  # Substitua pelo seu arquivo ou use URL
-)
-
 # --- FUNÇÕES PRINCIPAIS ---
 def calcular_odds(odd_atual, minuto_atual, descontos, tempo_total):
     minutos_restantes = tempo_total + descontos - minuto_atual
@@ -104,8 +88,6 @@ def calcular_odds(odd_atual, minuto_atual, descontos, tempo_total):
 
 # --- SIDEBAR PREMIUM ---
 with st.sidebar:
-    st.markdown(logo_html, unsafe_allow_html=True)
-    
     # Seletor de tema
     tema = st.radio(
         "🎨 Tema Visual",
@@ -220,11 +202,4 @@ st.markdown("""
         </button>
     </div>
 </div>
-""", unsafe_allow_html=True)
-
-# --- SCRIPT PARA ALTERAR TEMA DINAMICAMENTE ---
-st.markdown(f"""
-<script>
-    document.body.className = '{'dark-theme' if tema == 'Escuro' else 'light-theme'}';
-</script>
 """, unsafe_allow_html=True)
